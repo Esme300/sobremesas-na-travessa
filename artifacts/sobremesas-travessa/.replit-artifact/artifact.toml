@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Sobremesas na Travessa"
+description = "Página de vendas de Sobremesas na Travessa, instalada a partir do HTML enviado pelo usuário e mantida sem alterações de conteúdo."
+version = "1.0.0"
+id = "artifacts/sobremesas-travessa"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21595
+
+[services.development]
+run = "pnpm --filter @workspace/sobremesas-travessa run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sobremesas-travessa", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/sobremesas-travessa/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21595"
+BASE_PATH = "/"
